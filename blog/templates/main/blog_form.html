@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+</script>
+{% block content %}
+    <h1>Welcome to the Form Page!</h1>
+    <div class="container">
+      <form action="/main/blog_proc/" method="POST">
+          {{ form.as_p }}
+          {% csrf_token %}
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+    </div>
+{% endblock content %}
+

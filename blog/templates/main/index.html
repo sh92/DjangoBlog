@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% block content %}
+        <p id="write_blog"><a href="/main/blog_form/">Write a blog</a></p>
+        <hr/>
+        {% for post in post_list %}
+        <div class="post">
+            <div class="title">
+                {{ post.title }}
+            </div>
+            <div class="username">
+                {{ post.username }}
+            </div>
+            <div class="content">
+                {{ post.content }}
+            </div>
+        </div>
+        <hr/>
+        {% endfor %}
+{% endblock content %}
