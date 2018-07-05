@@ -26,7 +26,6 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
-    #author = models.ForeignKey('Author', on_delete=models.PROTECT)
     title = models.CharField(max_length=200)
     username = models.CharField(max_length=300)
     content = models.TextField()

@@ -24,7 +24,7 @@ def index(request):
 def blog_proc(request):
     blog = Blog(
             title=request.POST['title'],
-            username=request.POST['username'],
+            username=request.session['username'],
             content=request.POST['content'],
             )
     blog.save()
@@ -45,9 +45,8 @@ def blog_form(request):
     if request.method == 'POST':
         if form.is_valid():
             print("Form Validation Success")
-            print("Name"+form.cleaned_data['username'])
-            print('Title'+form.cleaned_data['title'])
-            print('Content'+form.cleaned_data['content'])
+            print(form.cleaned_data['title'])
+            print(form.cleaned_data['content'])
     return render(request, 'main/blog_form.html', {'form':form})
 
 @login_required
@@ -60,6 +59,7 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+        request.session['username'] = username
 
         if user:
             if user.is_active:

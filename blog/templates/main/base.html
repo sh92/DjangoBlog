@@ -9,14 +9,14 @@
 		<nav class="navbar navbar-default navbar-static-top">
             <div class="container">
 				<ul class="nav navbar-nav">
-					<li><a class="navbar-brand" href="{% url 'main:index' %}">DJANGO</a></li>
-					<li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-                    <li><a class="navbar-link" href="{% url 'main:register' %}">Register</a></li>
-
+					<li class="logo_nav"><a class="navbar-brand" href="{% url 'main:index' %}">DJANGO</a></li>
+					<li class="admin_nav"><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
 					{% if user.is_authenticated %}
+                    <li class="blog_form_nav"><a class="navbar-link" href="{% url 'main:blog_form' %}">Write</a></li>
 					<li><a href="{% url 'main:user_logout' %}">Logout</a></li>
 					{% else %}
-					<li><a class="navbar-link" href="{% url 'main:user_login' %}">Login</a></li>
+                    <li class="register_nav"><a class="navbar-link" href="{% url 'main:register' %}">Register</a></li>
+					<li class="user_login_nav"><a class="navbar-link" href="{% url 'main:user_login' %}">Login</a></li>
 					{% endif %}
 				</ul>
 			</div>

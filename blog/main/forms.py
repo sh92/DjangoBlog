@@ -15,7 +15,7 @@ class UserInfoForm(forms.ModelForm):
 
 class PostForm(forms.Form):
     title = forms.CharField()
-    username = forms.CharField()
+    #username = forms.CharField()
     content = forms.CharField(widget=forms.Textarea)
     class Meta():
         model = Blog
