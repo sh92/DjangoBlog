@@ -1,1 +1,1 @@
-# Django_blog_maker
+# DjangoBlogGenerater
