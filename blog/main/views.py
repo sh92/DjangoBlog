@@ -20,6 +20,19 @@ def index(request):
         'post_list': post_list,
         })
 
+
+def delete_blog(request):
+    title = request.GET['title']
+    print(title)
+    b = Blog.objects.filter(title=title)
+    print(b)
+    for x in b:
+        x.delete()
+    post_list = Blog.objects.all()
+    return render(request, "main/index.html", {
+        'post_list': post_list,})
+
+
 @csrf_exempt
 def blog_proc(request):
     blog = Blog(
@@ -41,7 +54,7 @@ def list_page(request):
         })
 
 def blog_form(request):
-    form = forms.PostForm()
+    form = forms.BlogForm()
     if request.method == 'POST':
         if form.is_valid():
             print("Form Validation Success")

@@ -13,9 +13,8 @@ class UserInfoForm(forms.ModelForm):
         model = UserInfo
         fields = ('profile_pic',)
 
-class PostForm(forms.Form):
+class BlogForm(forms.Form):
     title = forms.CharField()
-    #username = forms.CharField()
     content = forms.CharField(widget=forms.Textarea)
     class Meta():
         model = Blog

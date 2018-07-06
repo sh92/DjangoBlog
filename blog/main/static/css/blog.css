@@ -1,3 +1,28 @@
+h1 { 
+    text-align:center;
+}
+
 .title {
     font-weight: bold;
+}
+
+.blog_form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.blog_title {
+    font-size: 18px;
+}
+
+.blog_content {
+    font-size: 18px;
+}
+
+#id_title {
+    display:block;
+}
+
+#id_content {
+    display:block;
 }

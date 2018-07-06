@@ -10,4 +10,5 @@ urlpatterns=[
     url(r'^user_logout/', views.user_logout, name='user_logout'),
     url(r'^blog_form/',  views.blog_form, name='blog_form'),
     url(r'^blog_proc/',  views.blog_proc, name='blog_proc'),
+    url(r'^delete_blog/',  views.delete_blog, name='delete_blog'),
 ]
