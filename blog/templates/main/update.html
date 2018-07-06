@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+</script>
+{% block content %}
+    <h1>Update a blog</h1>
+    <div class="blog_form">
+    {% for bobj in bobject %}
+      <form action="/main/update_proc/" method="POST">
+          <input type="hidden" id="bid" name="bid" value="{{ bobj.bid }}" />
+          <input type="hidden" id="username" name="username" value="{{ bobj.username }}" />
+          <p> Author : {{ bobj.username }}</p>
+          <p> Title: </p>
+          <input type="text" id="title" name="title" value="{{ bobj.title }}"/>
+          <p> Content: </p>
+          <textarea id="content" name="content">{{ bobj.content }}</textarea>
+          <br/>
+          <input type="submit" class="btn btn-primary" value="Submit">
+        {% csrf_token %}
+        </form>
+    {% endfor %}
+    </div>
+{% endblock content %}

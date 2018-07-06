@@ -17,6 +17,7 @@
         </div>
         {% if request.session.username ==  post.username %}
         <a href="/main/delete_blog/?bid={{ post.bid }}&username={{ post.username }}"><p class = "delete">Delete</p></a>
+        <a href="/main/update_blog_form/?bid={{ post.bid }}&username={{ post.username }}"><p class = "update">Update</p></a>
         {% endif %}
         <hr/>
         {% endfor %}

@@ -12,7 +12,8 @@ from django.utils import timezone
 
 from django.views.decorators.csrf import csrf_exempt
 
-rowsPerPage = 2 
+#TODO pages
+#rowsPerPage = 2 
 
 def index(request):
     post_list = Blog.objects.all()
@@ -21,6 +22,11 @@ def index(request):
         })
 
 def update_blog_form(request):
+    username = request.GET['username']
+    post_list = Blog.objects.all()
+    if request.session['username'] != username:
+        return render(request, "main/index.html", {
+            'post_list': post_list,})
     bid = request.GET['bid']
     bobject = Blog.objects.filter(bid=bid)
     return render(request, "main/update.html", {
@@ -28,11 +34,11 @@ def update_blog_form(request):
         })
 
 def update_proc(request):
-    bid = request.GET['bid']
-    title = request.GET['title']
-    username = request.GET['username']
-    content = request.GET['content']
-    current_page = request.POST['current_page']
+    bid = request.POST['bid']
+    title = request.POST['title']
+    username = request.POST['username']
+    content = request.POST['content']
+    current_page = 1 # request.POST['current_page']
     Blog.objects.filter(bid=bid).update(title=title, username=username, content=content)
     url = '/list_page?cur_page=' + str(current_page)
     return HttpResponseRedirect(url)
@@ -49,7 +55,6 @@ def delete_blog(request):
         x.delete()
     return render(request, "main/index.html", {
         'post_list': post_list,})
-
 
 @csrf_exempt
 def blog_proc(request):
