@@ -12,7 +12,9 @@
                 {{ post.content }}
             </div>
         </div>
-        <a href="/main/delete_blog/?title={{ post.title }}"><p class = "delete">Delete</p></a>
+        {% if request.session.username ==  post.username %}
+        <a href="/main/delete_blog/?title={{ post.title }}&username={{ post.username }}"><p class = "delete">Delete</p></a>
+        {% endif %}
         <hr/>
         {% endfor %}
 {% endblock content %}

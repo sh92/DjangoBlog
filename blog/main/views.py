@@ -23,12 +23,16 @@ def index(request):
 
 def delete_blog(request):
     title = request.GET['title']
-    print(title)
+    username = request.GET['username']
+    post_list = Blog.objects.all()
+    print(username)
+    print(request.session['username'])
+    if request.session['username'] !=  username:
+        return render(request, "main/index.html", {
+            'post_list': post_list,})
     b = Blog.objects.filter(title=title)
-    print(b)
     for x in b:
         x.delete()
-    post_list = Blog.objects.all()
     return render(request, "main/index.html", {
         'post_list': post_list,})
 
