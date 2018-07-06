@@ -26,6 +26,7 @@ class Category(models.Model):
 
 
 class Blog(models.Model):
+    bid = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     username = models.CharField(max_length=300)
     content = models.TextField()

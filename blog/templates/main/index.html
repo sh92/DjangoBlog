@@ -2,6 +2,9 @@
 {% block content %}
         {% for post in post_list %}
         <div class="post">
+            <div>
+                {{ post.bid }}
+            </div>
             <div class="title">
                 {{ post.title }}
             </div>
@@ -13,7 +16,7 @@
             </div>
         </div>
         {% if request.session.username ==  post.username %}
-        <a href="/main/delete_blog/?title={{ post.title }}&username={{ post.username }}"><p class = "delete">Delete</p></a>
+        <a href="/main/delete_blog/?bid={{ post.bid }}&username={{ post.username }}"><p class = "delete">Delete</p></a>
         {% endif %}
         <hr/>
         {% endfor %}

@@ -5,7 +5,7 @@
     <div class="blog_form">
       <form action="/main/blog_proc/" method="POST">
           {% for field in form %}
-          <label class="blog_{{ field.name }}" for="{{ field.name }}_help">{{ field.label }}</label>
+            <label class="blog_{{ field.name }}" for="{{ field.name }}_help">{{ field.label }}</label>
             {{ field }}
             <br/>
           {% endfor %}

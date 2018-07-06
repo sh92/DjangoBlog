@@ -20,17 +20,31 @@ def index(request):
         'post_list': post_list,
         })
 
+def update_blog_form(request):
+    bid = request.GET['bid']
+    bobject = Blog.objects.filter(bid=bid)
+    return render(request, "main/update.html", {
+        'bobject': bobject,
+        })
 
-def delete_blog(request):
+def update_proc(request):
+    bid = request.GET['bid']
     title = request.GET['title']
     username = request.GET['username']
+    content = request.GET['content']
+    current_page = request.POST['current_page']
+    Blog.objects.filter(bid=bid).update(title=title, username=username, content=content)
+    url = '/list_page?cur_page=' + str(current_page)
+    return HttpResponseRedirect(url)
+
+def delete_blog(request):
+    bid = request.GET['bid']
+    username = request.GET['username']
     post_list = Blog.objects.all()
-    print(username)
-    print(request.session['username'])
-    if request.session['username'] !=  username:
+    if request.session['username'] != username:
         return render(request, "main/index.html", {
             'post_list': post_list,})
-    b = Blog.objects.filter(title=title)
+    b = Blog.objects.filter(bid=bid)
     for x in b:
         x.delete()
     return render(request, "main/index.html", {
@@ -40,10 +54,10 @@ def delete_blog(request):
 @csrf_exempt
 def blog_proc(request):
     blog = Blog(
-            title=request.POST['title'],
-            username=request.session['username'],
-            content=request.POST['content'],
-            )
+        title=request.POST['title'],
+        username=request.session['username'],
+        content=request.POST['content'],
+        )
     blog.save()
     url = '/list_page?cur_page=1'
     return HttpResponseRedirect(url)
@@ -87,7 +101,6 @@ def user_login(request):
         print("Someone tried to login and faild.")
         return HttpResponse("Invalid login")
     return render(request, 'main/login.html', {})
-
 
 def register(request):
     registered = False

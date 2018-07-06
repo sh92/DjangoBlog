@@ -18,4 +18,4 @@ class BlogForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea)
     class Meta():
         model = Blog
-        fields = ('title', 'username', 'content')
+        fields = ('bid', 'title', 'username', 'content')
