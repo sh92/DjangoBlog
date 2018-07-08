@@ -13,15 +13,6 @@ class UserInfo(models.Model):
     def __str__(self):
         return self.user.username
 
-class Category(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        ordering = ['name']
-
-    def __str__(self):
-        return self.name
-
 class Blog(models.Model):
     bid = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -29,12 +20,6 @@ class Blog(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-
-    def get_absolute_url(self):
-        return reverse('blog-detail', args=[str(self.id)])
 
     def publish(self):
         self.updated_at = timezone.now()

@@ -8,11 +8,6 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password')
 
-class UserInfoForm(forms.ModelForm):
-    class Meta():
-        model = UserInfo
-        fields = ('profile_pic',)
-
 class BlogForm(forms.Form):
     title = forms.CharField()
     content = forms.CharField(widget=forms.Textarea)
