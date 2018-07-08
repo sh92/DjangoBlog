@@ -1,28 +1,26 @@
 from django.test import TestCase
-from main.models import UserInfo, Blog
+from main.models import Blog
 from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from django.db import models
 import os
 
-class UserInfoModelTest(TestCase):
-
-    user = User()
-    image_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    image_name = 'test_image.jpg'
-    image_path = image_dir+"/tests/"+image_name
-
-    newPhoto = SimpleUploadedFile(name=image_name, content=open(image_path, 'rb').read(), content_type='image/jpeg')
-
-
-    def create_UserInfo(self, profile_pic=newPhoto):
-        return UserInfo.objects.create(user=self.user, profile_pic=profile_pic)
-
-    def test_valid_UserInfo(self):
-        u = self.create_UserInfo()
-        self.assertTrue(isinstance(u, UserInfo))
-        self.assertEquals(u.__str__(), u.user.username)
-
 class BlogModelTest(TestCase):
-    pass
+
+    def setUp(self):
+        self.blog = Blog()
+        self.blog.title = "This is title"
+        self.blog.content = "This is content"
+        self.blog.save()
+
+    def test_creating_new_blog(self):
+        all_blog_in_database = Blog.objects.all()
+        self.assertEquals(len(all_blog_in_database), 1)
+        only_blog_in_database = all_blog_in_database[0]
+        self.assertEquals(only_blog_in_database, self.blog)
+
+        self.assertEquals(only_blog_in_database.title, "This is title")
+        self.assertEquals(only_blog_in_database.content, "This is content")
+
+    def test_blog_str(self):
+        self.assertEquals(str(self.blog), "This is title")
