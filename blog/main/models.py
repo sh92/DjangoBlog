@@ -6,21 +6,11 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 
-class UserInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT)
-    profile_pic = models.ImageField(upload_to='profile_pic',blank=True)
-
-    def __str__(self):
-        return self.user.username
-
-class Category(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        ordering = ['name']
-
-    def __str__(self):
-        return self.name
+#class UserInfo(models.Model):
+#    user = models.ForeignKey(User, on_delete=models.CASCADE)
+#    email = models.EmailField(blank=True)
+#    def __str__(self):
+#        return self.user.username
 
 class Blog(models.Model):
     bid = models.AutoField(primary_key=True)
@@ -29,12 +19,6 @@ class Blog(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ["-updated_at"]
-
-    def get_absolute_url(self):
-        return reverse('blog-detail', args=[str(self.id)])
 
     def publish(self):
         self.updated_at = timezone.now()
