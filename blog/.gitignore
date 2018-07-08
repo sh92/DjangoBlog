@@ -54,3 +54,6 @@ media/
 *~
 *.swp
 *.swo
+
+# pycache
+.pytest_cache/
