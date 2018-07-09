@@ -1,6 +1,7 @@
 from main.forms import SignUpForm
 from .models import Blog 
 from . import forms
+from execeptions.FormException import UserFormException
 
 from django.shortcuts import render
 from django.views import generic
@@ -9,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.utils import timezone
+from django.shortcuts import redirect
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -46,15 +48,11 @@ def update_proc(request):
 def delete_blog(request):
     bid = request.GET['bid']
     username = request.GET['username']
-    post_list = Blog.objects.all()
-    if request.session['username'] != username:
-        return render(request, "main/index.html", {
-            'post_list': post_list,})
-    b = Blog.objects.filter(bid=bid)
-    for x in b:
-        x.delete()
-    return render(request, "main/index.html", {
-        'post_list': post_list,})
+    if request.session['username'] == username:
+        b = Blog.objects.filter(bid=bid)
+        for x in b:
+            x.delete()
+    return redirect('index')
 
 @csrf_exempt
 def blog_proc(request):
@@ -63,18 +61,15 @@ def blog_proc(request):
         username=request.session['username'],
         content=request.POST['content'],
         )
+    cur_page=1
     blog.save()
-    url = '/list_page?cur_page=1'
+    url = '/list_page?cur_page='+cur_page
     return HttpResponseRedirect(url)
 
 def list_page(request):
     cur_page = request.GET['cur_page']
     total_cnt = Blog.objects.all().count()
-    print('cur_page=', cur_page)
-    post_list = Blog.objects.all()
-    return render(request, "main/index.html", {
-        'post_list': post_list,
-        })
+    return redirect('index')
 
 def blog_form(request):
     form = forms.BlogForm()
@@ -119,6 +114,7 @@ def register(request):
             registered = True
         else:
             print(user_form.errors)
+            raise UserFormException()
     else:
         user_form = SignUpForm()
 

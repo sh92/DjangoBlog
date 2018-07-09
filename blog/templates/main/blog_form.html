@@ -3,13 +3,13 @@
 {% block content %}
     <h1>Write a blog</h1>
     <div class="blog_form">
-      <form action="/main/blog_proc/" method="POST">
-          {% for field in form %}
+        <form action="{{ form.get_absolute_url }}" method="POST">
+           {% for field in form %}
             <label class="blog_{{ field.name }}" for="{{ field.name }}_help">{{ field.label }}</label>
             {{ field }}
             <br/>
-          {% endfor %}
           {% csrf_token %}
+          {% endfor %}
           <input type="submit" class="btn btn-primary" value="Submit">
         </form>
     </div>
