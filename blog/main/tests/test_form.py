@@ -1,6 +1,5 @@
 from main.models import Blog
-from main.forms import BlogForm
-from main.forms import SignUpForm
+from main.forms import BlogForm, SignUpForm
 from django.test import TestCase
 
 
@@ -16,4 +15,19 @@ class SignUpFormTest(TestCase):
             'password': self.password})
 
     def test_SignUpFormIsValid(self):
+        self.assertTrue(self.myForm.is_valid())
+
+
+class BlogFormTest(TestCase):
+
+    def setUp(self):
+        self.title = 'TestTitle'
+        self.content = 'TestContent'
+        self.username = 'TestName'
+        self.myForm = BlogForm({
+            'title': self.title,
+            'content': self.content,
+            'username': self.username})
+
+    def test_BlogFormIsValid(self):
         self.assertTrue(self.myForm.is_valid())
