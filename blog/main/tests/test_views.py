@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from main.models import Blog
 from main.forms import SignUpForm
 from main.views import register
@@ -32,3 +32,18 @@ class registerViewTest(TestCase):
         test_user = User.objects.get(username='TestName')
         self.assertEqual(test_user.username, 'TestName')
         self.assertEqual(test_user.email, 'email@mail.com')
+
+class userLogInAndOutTest(TestCase):
+
+    def test_login_and_logout(self):
+        self.credentials = {
+                'username': 'testuser',
+                'password': 'secret'}
+        User.objects.create_user(**self.credentials)
+
+        self.client = Client()
+        response = self.client.post(reverse('main:user_login'), **self.credentials)
+        self.assertEquals(response.status_code, 200)
+        self.client.login(username='testuser', password="secret")
+        response = self.client.post(reverse('main:user_logout'))
+        self.assertRedirects(response, reverse('index'))
