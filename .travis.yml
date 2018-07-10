@@ -7,6 +7,7 @@ cache:
   pip: true
 
 before_install:
+  - cd blog
   - cp requirements.txt requirements.orig
   - cat test-requirements.txt  >> requirements.txt
   - sed -i.bak '/^-r/d' requirements.txt
@@ -15,7 +16,6 @@ before_script:
   - mv requirements.orig requirements.txt
 
 script:
-  - python setup.py install
   - "pip install -r requirements.txt"
   - coala --non-interactive
   - pytest
