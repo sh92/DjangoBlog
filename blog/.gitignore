@@ -42,6 +42,10 @@ nosetests.xml
 coverage.xml
 *,cover
 .pytest_cache
+*.orig
+main/*.org
+main/tests/*.orig
+execeptions/*.orig
 
 # Django stuff:
 *.log

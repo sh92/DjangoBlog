@@ -51,7 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
-TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 TEMPLATES = [
     {
@@ -79,11 +79,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        #'ENGINE': 'django.db.backends.mysql',
-        #'Name': 'springbook',
-        #'USER': 'spring',
-        #'PASSWORD': 'book',
-        #'PORT': '3306',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'Name': 'springbook',
+        # 'USER': 'spring',
+        # 'PASSWORD': 'book',
+        # 'PORT': '3306',
     }
 }
 

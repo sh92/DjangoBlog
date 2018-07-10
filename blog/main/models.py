@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+
 class Blog(models.Model):
     bid = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)

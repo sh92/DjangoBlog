@@ -1,5 +1,5 @@
 from main.forms import SignUpForm
-from .models import Blog 
+from .models import Blog
 from . import forms
 from execeptions.FormException import UserFormException
 
@@ -14,36 +14,40 @@ from django.shortcuts import redirect
 
 from django.views.decorators.csrf import csrf_exempt
 
-#TODO pages
-#rowsPerPage = 2 
+# TODO pages
+
 
 def index(request):
     post_list = Blog.objects.all()
-    return render(request, "main/index.html", {
+    return render(request, 'main/index.html', {
         'post_list': post_list,
         })
+
 
 def update_blog_form(request):
     username = request.GET['username']
     post_list = Blog.objects.all()
     if request.session['username'] != username:
-        return render(request, "main/index.html", {
-            'post_list': post_list,})
+        return render(request, 'main/index.html', {
+            'post_list': post_list, })
     bid = request.GET['bid']
     bobject = Blog.objects.filter(bid=bid)
-    return render(request, "main/update.html", {
+    return render(request, 'main/update.html', {
         'bobject': bobject,
         })
+
 
 def update_proc(request):
     bid = request.POST['bid']
     title = request.POST['title']
     username = request.POST['username']
     content = request.POST['content']
-    current_page = 1 # request.POST['current_page']
-    Blog.objects.filter(bid=bid).update(title=title, username=username, content=content)
+    current_page = 1  # request.POST['current_page']
+    Blog.objects.filter(bid=bid).update(
+        title=title, username=username, content=content)
     url = '/list_page?cur_page=' + str(current_page)
     return HttpResponseRedirect(url)
+
 
 def delete_blog(request):
     bid = request.GET['bid']
@@ -54,6 +58,7 @@ def delete_blog(request):
             x.delete()
     return redirect('index')
 
+
 @csrf_exempt
 def blog_proc(request):
     blog = Blog(
@@ -61,29 +66,33 @@ def blog_proc(request):
         username=request.session['username'],
         content=request.POST['content'],
         )
-    cur_page=1
+    cur_page = 1
     blog.save()
     url = '/list_page?cur_page='+cur_page
     return HttpResponseRedirect(url)
 
+
 def list_page(request):
-    cur_page = request.GET['cur_page']
-    total_cnt = Blog.objects.all().count()
+    request.GET['cur_page']
+    Blog.objects.all().count()
     return redirect('index')
+
 
 def blog_form(request):
     form = forms.BlogForm()
     if request.method == 'POST':
         if form.is_valid():
-            print("Form Validation Success")
+            print('Form Validation Success')
             print(form.cleaned_data['title'])
             print(form.cleaned_data['content'])
-    return render(request, 'main/blog_form.html', {'form':form})
+    return render(request, 'main/blog_form.html', {'form': form})
+
 
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -98,9 +107,10 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('index'))
             return HttpResponse('Your account is not active.')
 
-        print("Someone tried to login and faild.")
-        return HttpResponse("Invalid login")
+        print('Someone tried to login and faild.')
+        return HttpResponse('Invalid login')
     return render(request, 'main/login.html', {})
+
 
 def register(request):
     registered = False
@@ -119,5 +129,5 @@ def register(request):
         user_form = SignUpForm()
 
     return render(request, 'main/registration.html',
-                  {'user_form':user_form,
-                   'registered':registered})
+                  {'user_form': user_form,
+                   'registered': registered})
