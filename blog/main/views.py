@@ -26,10 +26,8 @@ def index(request):
 
 def update_blog_form(request):
     username = request.GET['username']
-    post_list = Blog.objects.all()
     if request.session['username'] != username:
-        return render(request, 'main/index.html', {
-            'post_list': post_list, })
+        return redirect('index')
     bid = request.GET['bid']
     bobject = Blog.objects.filter(bid=bid)
     return render(request, 'main/update.html', {
@@ -49,6 +47,7 @@ def update_proc(request):
     return HttpResponseRedirect(url)
 
 
+
 def delete_blog(request):
     bid = request.GET['bid']
     username = request.GET['username']
@@ -61,14 +60,18 @@ def delete_blog(request):
 
 @csrf_exempt
 def blog_proc(request):
+    blog_proc_username = request.POST.get('username', '')
+    if blog_proc_username == '':
+        blog_proc_username = request.session['username']
+
     blog = Blog(
         title=request.POST['title'],
-        username=request.session['username'],
+        username=blog_proc_username,
         content=request.POST['content'],
         )
     cur_page = 1
     blog.save()
-    url = '/list_page?cur_page='+cur_page
+    url = '/list_page?cur_page='+str(cur_page)
     return HttpResponseRedirect(url)
 
 
