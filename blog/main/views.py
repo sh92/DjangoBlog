@@ -47,7 +47,6 @@ def update_proc(request):
     return HttpResponseRedirect(url)
 
 
-
 def delete_blog(request):
     bid = request.GET['bid']
     username = request.GET['username']
